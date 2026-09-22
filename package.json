@@ -12,7 +12,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx scripts/seed.ts",
     "db:studio": "drizzle-kit studio",
-    "db:setup": "npm run db:migrate && npm run db:seed"
+    "db:checkpoint": "tsx scripts/checkpoint-db.ts",
+    "db:setup": "npm run db:migrate && npm run db:seed && npm run db:checkpoint"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.3",
