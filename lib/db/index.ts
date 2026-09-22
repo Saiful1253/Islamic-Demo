@@ -4,17 +4,17 @@ import Database from "better-sqlite3";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import * as schema from "./schema";
 
-/**
- * SQLite connection (server-only).
- *
- * `better-sqlite3` is a synchronous native driver; Next.js already treats it
- * as an external server package, so it never reaches the client bundle.
- * Override the file location with `SQLITE_DB_PATH` if needed.
- */
-const dbPath =
-  process.env.SQLITE_DB_PATH ?? path.join(process.cwd(), "data", "app.db");
+const isVercel = process.env.VERCEL === "1";
 
-fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+const dataDir = isVercel ? "/tmp" : path.join(process.cwd(), "data");
+const dbPath = path.join(dataDir, "app.db");
+const bundledDbPath = path.join(process.cwd(), "data", "app.db");
+
+fs.mkdirSync(dataDir, { recursive: true });
+
+if (isVercel && fs.existsSync(bundledDbPath) && !fs.existsSync(dbPath)) {
+  fs.copyFileSync(bundledDbPath, dbPath);
+}
 
 const sqlite = new Database(dbPath);
 sqlite.pragma("journal_mode = WAL");

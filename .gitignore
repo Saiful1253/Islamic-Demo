@@ -42,3 +42,5 @@ node_modules
 # sqlite database (local data file, regenerate with npm run db:setup)
 /data/*.db
 /data/*.db-*
+
+.vercel

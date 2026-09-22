@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "npm run db:setup",
     "start": "next start",
     "lint": "eslint",
     "db:generate": "drizzle-kit generate",
