@@ -7,12 +7,14 @@ import * as schema from "./schema";
 const isVercel = process.env.VERCEL === "1";
 
 const dataDir = isVercel ? "/tmp" : path.join(process.cwd(), "data");
-const dbPath = path.join(dataDir, "app.db");
+const dbPath =
+  process.env.SQLITE_DB_PATH ??
+  (isVercel ? path.join(dataDir, "app.db") : path.join(dataDir, "app.db"));
 const bundledDbPath = path.join(process.cwd(), "data", "app.db");
 
-fs.mkdirSync(dataDir, { recursive: true });
+fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 
-if (isVercel && fs.existsSync(bundledDbPath) && !fs.existsSync(dbPath)) {
+if (isVercel && !process.env.SQLITE_DB_PATH && fs.existsSync(bundledDbPath)) {
   fs.copyFileSync(bundledDbPath, dbPath);
 }
 
