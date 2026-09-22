@@ -1,14 +1,15 @@
 import { ChevronRight } from "lucide-react";
-import { duas } from "@/lib/data";
+import type { Dua } from "@/lib/data";
 import type { Settings } from "@/lib/settings";
 import DuaCard from "./DuaCard";
 
 interface Props {
+  duas: Dua[];
   sectionTitle: string;
   settings: Settings;
 }
 
-export default function ContentArea({ sectionTitle, settings }: Props) {
+export default function ContentArea({ duas, sectionTitle, settings }: Props) {
   return (
     <main className="min-w-0 flex-1 bg-page">
       <nav

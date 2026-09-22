@@ -6,12 +6,18 @@ import Header from "./Header";
 import IconRail from "./IconRail";
 import SettingsPanel from "./SettingsPanel";
 import Sidebar from "./Sidebar";
-import { SECTION_DEFAULT } from "@/lib/data";
+import { SECTION_DEFAULT, type Dua, type Language, type SidebarSection } from "@/lib/data";
 import { ACCENTS, defaultSettings, type Settings } from "@/lib/settings";
 
 const DEFAULT_ACTIVE_ITEM = "The most important thing to ask Allah for";
 
-export default function DuaApp() {
+interface Props {
+  duas: Dua[];
+  sidebarSections: SidebarSection[];
+  languages: Language[];
+}
+
+export default function DuaApp({ duas, sidebarSections, languages }: Props) {
   const [settings, setSettings] = useState<Settings>(defaultSettings);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -53,6 +59,7 @@ export default function DuaApp() {
       className="flex min-h-screen flex-col bg-page text-ink"
     >
       <Header
+        languages={languages}
         onToggleSidebar={() => setSidebarOpen((v) => !v)}
         onOpenSettings={() => {
           setSettingsOpen(true);
@@ -70,12 +77,17 @@ export default function DuaApp() {
         <IconRail onToggleMenu={() => setSidebarOpen((v) => !v)} />
 
         <Sidebar
+          sections={sidebarSections}
           open={sidebarOpen}
           activeLabel={activeLabel}
           onSelect={handleSelect}
         />
 
-        <ContentArea sectionTitle={sectionTitle} settings={settings} />
+        <ContentArea
+          duas={duas}
+          sectionTitle={sectionTitle}
+          settings={settings}
+        />
 
         {/* Settings gutter: zero-width below xl (panel is a fixed drawer),
             fixed-width column with the panel in flow at xl+ */}

@@ -2,16 +2,18 @@
 
 import { useCallback, useState } from "react";
 import { ChevronDown, Menu, Settings as SettingsIcon } from "lucide-react";
-import { languages } from "@/lib/data";
+import type { Language } from "@/lib/data";
 import { useClickOutside } from "@/lib/useClickOutside";
 
 interface Props {
+  languages: Language[];
   onToggleSidebar: () => void;
   onOpenSettings: () => void;
   onSupport: () => void;
 }
 
 export default function Header({
+  languages,
   onToggleSidebar,
   onOpenSettings,
   onSupport,

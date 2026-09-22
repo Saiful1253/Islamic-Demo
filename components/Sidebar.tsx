@@ -2,15 +2,21 @@
 
 import { useState } from "react";
 import { CornerDownRight, Search } from "lucide-react";
-import { sidebarSections } from "@/lib/data";
+import type { SidebarSection } from "@/lib/data";
 
 interface Props {
+  sections: SidebarSection[];
   open: boolean;
   activeLabel: string;
   onSelect: (label: string) => void;
 }
 
-export default function Sidebar({ open, activeLabel, onSelect }: Props) {
+export default function Sidebar({
+  sections,
+  open,
+  activeLabel,
+  onSelect,
+}: Props) {
   const [query, setQuery] = useState("");
   const ql = query.trim().toLowerCase();
 
@@ -44,7 +50,7 @@ export default function Sidebar({ open, activeLabel, onSelect }: Props) {
 
       {/* Category groups + tree */}
       <div className="px-[34px] pt-[27px]">
-        {sidebarSections.map((sec) => {
+        {sections.map((sec) => {
           const items = ql
             ? sec.items.filter((i) => i.label.toLowerCase().includes(ql))
             : sec.items;
