@@ -1,9 +1,10 @@
-import type { Dua, Language, SidebarSection } from "../lib/data";
+import type { Dua, Language, SidebarSection } from "../data";
 
 /**
  * Source data used to populate the SQLite database.
  * After seeding, the database is the single source of truth —
- * this file only exists for `npm run db:seed`.
+ * this file only exists for seeding (`npm run db:seed` and the
+ * automatic first-run bootstrap in `lib/db/index.ts`).
  */
 
 export const seedLanguages: Language[] = [
